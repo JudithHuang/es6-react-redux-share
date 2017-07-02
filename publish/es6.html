@@ -1,0 +1,425 @@
+<!--
+    Powered By nodeppt - This is probably the best web presentation tool so far!
+    version: 1.4.5
+    site: https://github.com/ksky521/nodeppt
+    date: 2017年6月30号
+-->
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ES6 - By Judith Huang</title>
+    <link rel="stylesheet" media="all" href="./css/nodeppt.css">
+    <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="./css/phone.css">
+    
+    <link rel="stylesheet" href="./js/highlight/styles/monokai_sublime.css">
+    <link rel="stylesheet" href="./css/font-awesome.css">
+    
+<link rel="stylesheet" href="./css/theme.dark.css">
+</head>
+<body>
+<div class="slides">
+    <slides id="container">
+        <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>ES6</h1>
+<p><small>演讲者：Judith Huang</small></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h1>let 命令</h1>
+
+</hgroup><article>
+
+<ul>
+<li>基本用法:<br>ES6 新增了 <code>let</code> 命令，用来声明变量。它的用法类似于 <code>var</code> , 但是所声明的变量，只在 <code>let</code> 命令的代码块内有效。</li>
+</ul>
+<pre><code class="js">{
+  let a = 10;
+  var b = 1;
+}
+
+a // ReferenceError: a is not defined.
+b // 1
+</code></pre>
+<ul>
+<li>不存在变量提升<br><code>var</code> 命令会发生”变量提升“现象，即变量可以在声明之前使用，值为 <code>undefined</code>。
+<code>let</code> 命令改变了语法行为，它所声明的变量一定要在声明后使用，否则报错。</li>
+</ul>
+<pre><code class="js">// var 的情况
+console.log(number); // 输出undefined
+var number = 2;
+
+// let 的情况
+console.log(bar); // 报错ReferenceError
+let bar = 2;
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h1>let 命令</h1>
+
+</hgroup><article>
+
+<ul>
+<li>暂时性死区:<br>只要块级作用域内存在let命令，它所声明的变量就“绑定”（binding）这个区域，不再受外部的影响。<br>下面代码中，存在全局变量tmp，但是块级作用域内let又声明了一个局部变量tmp，导致后者绑定这个块级作用域，所以在let声明变量前，对tmp赋值会报错。</li>
+</ul>
+<pre><code class="js">var tmp = 123;
+
+if (true) {
+  tmp = &#39;abc&#39;; // ReferenceError
+  let tmp;
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h1>let 命令</h1>
+
+</hgroup><article>
+
+<ul>
+<li>不允许重复声明:<br>let不允许在相同作用域内，重复声明同一个变量。</li>
+</ul>
+<pre><code class="js">// 报错
+function () {
+  let a = 10;
+  var a = 1;
+}
+
+// 报错
+function () {
+  let a = 10;
+  let a = 1;
+}
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h1>const 命令</h1>
+
+</hgroup><article>
+
+<p><code>const</code> 声明一个只读的常量。一旦声明，常量的值就不能改变。
+<code>const</code> 一旦声明变量，就必须立即初始化，不能留到以后赋值。</p>
+<pre><code class="js">const PI = 3.1415;
+PI // 3.1415
+
+PI = 3;
+// TypeError: Assignment to constant variable.
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h1>变量的结构赋值</h1>
+
+</hgroup><article>
+
+<ul>
+<li>数据的解构赋值:<br>ES6 允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被称为解构（Destructuring）。</li>
+</ul>
+<pre><code class="js">// 以前写法
+let a = 1;
+let b = 2;
+let c = 3;
+
+// ES6写法
+let [a, b, c] = [1, 2, 3];
+
+// 解构设置默认值, 如果一个数组成员不严格等于undefined，默认值是不会生效的
+let [x = 1] = [undefined];
+x // 1
+
+let [x = 1] = [null];
+x // null
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h1>变量的结构赋值</h1>
+
+</hgroup><article>
+
+<ul>
+<li>对象的解构赋值<br>对象的解构与数组有一个重要的不同。数组的元素是按次序排列的，变量的取值由它的位置决定；而对象的属性没有次序，变量必须与属性同名，才能取到正确的值。</li>
+</ul>
+<pre><code class="js">let { name } = { name: &quot;Tom&quot; };
+name // &quot;Tom&quot;
+
+// 如果变量名与属性名不一致
+let { name: myName } = { name: &quot;Tom&quot; };
+myName // Tom
+
+// 解构设置默认值
+let { name: myName = &quot;Tim&quot; } = { };
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h1>变量的结构赋值</h1>
+
+</hgroup><article>
+
+<ul>
+<li>字符串的解构赋值<br>字符串也可以解构赋值。这是因为此时，字符串被转换成了一个类似数组的对象。</li>
+</ul>
+<pre><code class="js">const [a, b, c, d, e] = &#39;hello&#39;;
+a // &quot;h&quot;
+b // &quot;e&quot;
+c // &quot;l&quot;
+d // &quot;l&quot;
+e // &quot;o&quot;
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h1>变量的结构赋值</h1>
+
+</hgroup><article>
+
+<ul>
+<li>函数参数的解构赋值<br>函数 <code>add</code> 的参数表面上是一个数组，但在传入参数的那一刻，数组参数就被解构成变量 <code>x</code> 和 <code>y</code> 。对于函数内部的代码来说，它们能感受到的参数就是 <code>x</code> 和 <code>y</code> 。</li>
+</ul>
+<pre><code class="js">function add([x, y]){
+  return x + y;
+}
+
+add([1, 2]); // 3
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h1>字符串的扩展</h1>
+
+</hgroup><article>
+
+<ul>
+<li>字符串的遍历器接口<br>ES6为字符串添加了遍历器接口（详见《Iterator》一章），使得字符串可以被for...of循环遍历。</li>
+</ul>
+<pre><code class="js">for (let codePoint of &#39;foo&#39;) {
+  console.log(codePoint)
+}
+// &quot;f&quot;
+// &quot;o&quot;
+// &quot;o&quot;
+</code></pre>
+<ul>
+<li><p>includes(), startsWith(), endsWith()<br>传统上，JavaScript只有indexOf方法，可以用来确定一个字符串是否包含在另一个字符串中。ES6又提供了三种新方法。这三个方法都支持第二个参数，表示开始搜索的位置</p>
+<ul>
+<li>includes()：返回布尔值，表示是否找到了参数字符串。</li>
+<li>startsWith()：返回布尔值，表示参数字符串是否在源字符串的头部。</li>
+<li>endsWith()：返回布尔值，表示参数字符串是否在源字符串的尾部。</li>
+</ul>
+</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h1>字符串的扩展</h1>
+
+</hgroup><article>
+
+<ul>
+<li>模板字符串<br>传统的JavaScript语言，输出模板通常是这样写的</li>
+</ul>
+<pre><code class="js">$(&#39;#result&#39;).append(
+  &#39;There are &lt;b&gt;&#39; + basket.count + &#39;&lt;/b&gt; &#39; +
+  &#39;items in your basket, &#39; +
+  &#39;&lt;em&gt;&#39; + basket.onSale +
+  &#39;&lt;/em&gt; are on sale!&#39;
+);
+</code></pre>
+<p>上面这种写法相当繁琐不方便，ES6引入了模板字符串解决这个问题。</p>
+<pre><code class="js">$(&#39;#result&#39;).append(`
+  There are &lt;b&gt;${basket.count}&lt;/b&gt; items
+   in your basket, &lt;em&gt;${basket.onSale}&lt;/em&gt;
+  are on sale!
+`);
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h1>字符串的扩展</h1>
+
+</hgroup><article>
+
+<ul>
+<li>模板字符串<br>模板字符串（template string）是增强版的字符串，用反引号（`）标识。它可以当作普通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量。</li>
+</ul>
+<pre><code class="js">// 普通字符串
+`In JavaScript &#39;\n&#39; is a line-feed.`
+
+// 多行字符串
+`In JavaScript this is
+ not legal.`
+
+console.log(`string text line 1
+string text line 2`);
+
+// 字符串中嵌入变量
+var name = &quot;Bob&quot;, time = &quot;today&quot;;
+`Hello ${name}, how are you ${time}?`
+
+// 大括号内部可以放入任意的JavaScript表达式，可以进行运算，以及引用对象属性。
+var x = 1;
+var y = 2;
+
+`${x} + ${y} = ${x + y}`
+// &quot;1 + 2 = 3&quot;
+
+// 模板字符串之中还能调用函数。
+function fn() {
+  return &quot;Hello World&quot;;
+}
+
+`foo ${fn()} bar`
+// foo Hello World bar
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>正则的扩展</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>数值的扩展</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>函数的扩展</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>对象的扩展</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Symbol</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Set &amp; Map</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Proxy</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Reflect</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Promise 对象</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Iterator 和 for ... of 循环</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Generator 函数</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>async 函数</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Class 的基本语法</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Decorator</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>Module 的语法</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>babel</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>reference</h1>
+<ul>
+<li><a href="http://es6.ruanyifeng.com/" target="_blank">ECMAScript 6 入门</a></li>
+<li><a href="https://github.com/lukehoban/es6features" target="_blank">ES6 Features</a></li>
+</ul>
+
+</article></section></slide>
+        
+
+        <!-- <slide class="slide logoslide dark nobackground">
+            <article class="flexbox vcenter">
+                <h2 style="color: white;">Powered By nodeppt v1.4.5</h2>
+            </article>
+        </slide> -->
+        <div class="slideTip" id="tip"></div>
+    </slides>
+</div>
+<canvas id="drawBoard" class="draw-board" width="900" height="700"></canvas>
+<div class="progress"><span id="progress"></span></div>
+<div id="_buttons">
+    <div class="_btn-box" id="_btn-box" style="display:none;">
+        <button class="fa fa-arrow-circle-left" id="_btn-prev"></button>
+        <button class="fa fa-arrow-circle-right" id="_btn-next"></button>
+        <button class="fa fa-paint-brush" id="_btn-brush"></button>
+        <button class="fa fa-compress" id="_btn-overview" data-toggle="fa fa-expand"></button>
+    </div>
+    <button class="fa fa-bars" id="_btn-bar"  data-toggle="fa fa-close"></button>
+</div>
+<script src="./js/mixjs/lib/mix.0.3.0.min.js"></script>
+<script>
+    var ASSET_RELATIVE_DIR = ".";
+</script>
+<script>
+var base = location.protocol + '//' + location.host;
+
+var path = (location.pathname + '#').split('/').filter(function(v){
+    return !!v;
+});
+path.pop();
+path = path.join('/');
+if (typeof ASSET_RELATIVE_DIR === 'string') {
+    path = path + '/' + ASSET_RELATIVE_DIR;
+}
+MixJS.config({
+    baseURL: [ base, path, 'js'].join('/')+'/'
+});
+
+</script>
+<script src="./js/mixjs/lib/event/broadcast.js"></script>
+<script src="./js/nodeppt.js"></script>
+<script>
+Slide.init({
+    containerID: 'container',
+    drawBoardID: 'drawBoard',
+    slideClass: '.slide',
+    buildClass: '.build',
+    progressID: 'progress',
+    transition: 'slide3',
+    width: 1100,
+    dir: './',
+    
+    //打开下面的注释就开启postMessage方式
+    //访问网址127.0.0.1:8080/ppt/demo#client
+    control:{
+        type: 'postMessage',
+        args:{
+            isControl:  false
+        }
+    },
+    
+    tipID: 'tip'
+});
+MixJS.loadJS('highlight/highlight.pack.js',function(){
+    hljs.tabReplace = '  ';
+    hljs.initHighlightingOnLoad();
+});
+</script>
+
+
+<!--placeholder-->
+</body>
+</html>
