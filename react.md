@@ -14,6 +14,49 @@ date: 2017年7月03号
 
 [slide]
 # JSX
+------
+- 简介
+JSX语法，像是在Javascript代码里直接写XML的语法，实质上这只是一个语法糖，每一个XML标签都会被JSX转换工具转换成纯Javascript代码，React 官方推荐使用JSX， 当然你想直接使用纯Javascript代码写也是可以的，只是使用JSX，组件的结构和组件之间的关系看上去更加清晰。
+
+```js
+const arr = [
+  <h1>我是一级标题</h1>,
+  <h2>我是二级标题</h2>,
+];
+
+React.render(
+  <div>
+    <div>
+      <div>content</div>
+      <div>表达式: { 1 + 2 }</div>
+      {/* 模板中插入数组，数组会自动展开所有成员 */}
+      { arr }
+    </div>
+  </div>,
+  document.getElementById('example')
+);
+```
+
+[slide]
+# JSX 陷阱
+------
+- style属性: 不能采用引号的书写方式
+- HTML转义: 内容是用户输入的富文本，从后台取到数据后展示在页面上，希望展示相应的样式
+
+```js
+var content='<strong>content</strong>';
+ 
+React.render(
+    <div 
+        style={{color:'red'}}
+        dangerouslySetInnerHTML={{__html: content}}
+    >   
+        {/* content */}
+        {/* 直接输出内容: <strong>content</strong> */}
+    </div>,
+    document.body
+);
+```
 
 [slide]
 # 渲染元素

@@ -1,4 +1,4 @@
-# 分享 ppt 地址
+# ppt 地址
 
 - [es6](https://judithhuang.github.io/es6-react-redux-share/es6/es6.html)
 - [react & redux](https://judithhuang.github.io/es6-react-redux-share/react/react.html)
