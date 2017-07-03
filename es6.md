@@ -90,7 +90,7 @@ PI = 3;
 ```
 
 [slide]
-# 变量的结构赋值
+# 变量的解构赋值
 ------
 - 数据的解构赋值:    
 ES6 允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被称为解构（Destructuring）。
@@ -113,7 +113,7 @@ x // null
 ```
 
 [slide]
-# 变量的结构赋值
+# 变量的解构赋值
 ------
 - 对象的解构赋值    
 对象的解构与数组有一个重要的不同。数组的元素是按次序排列的，变量的取值由它的位置决定；而对象的属性没有次序，变量必须与属性同名，才能取到正确的值。
@@ -131,7 +131,7 @@ let { name: myName = "Tim" } = { };
 ```
 
 [slide]
-# 变量的结构赋值
+# 变量的解构赋值
 ------
 - 字符串的解构赋值    
 字符串也可以解构赋值。这是因为此时，字符串被转换成了一个类似数组的对象。
@@ -146,7 +146,7 @@ e // "o"
 ```
 
 [slide]
-# 变量的结构赋值
+# 变量的解构赋值
 ------
 - 函数参数的解构赋值    
 函数 `add` 的参数表面上是一个数组，但在传入参数的那一刻，数组参数就被解构成变量 `x` 和 `y` 。对于函数内部的代码来说，它们能感受到的参数就是 `x` 和 `y` 。
@@ -186,26 +186,7 @@ for (let codePoint of 'foo') {
 # 字符串的扩展
 ------
 - 模板字符串    
-传统的JavaScript语言，输出模板通常是这样写的
-
-```js
-$('#result').append(
-  'There are <b>' + basket.count + '</b> ' +
-  'items in your basket, ' +
-  '<em>' + basket.onSale +
-  '</em> are on sale!'
-);
-```
-
-上面这种写法相当繁琐不方便，ES6引入了模板字符串解决这个问题。
-
-```js
-$('#result').append(`
-  There are <b>${basket.count}</b> items
-   in your basket, <em>${basket.onSale}</em>
-  are on sale!
-`);
-```
+模板字符串（template string）是增强版的字符串，用反引号（`）标识。它可以当作普通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量。
 
 [slide]
 # 字符串的扩展
@@ -214,83 +195,215 @@ $('#result').append(`
 模板字符串（template string）是增强版的字符串，用反引号（`）标识。它可以当作普通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量。
 
 ```js
-// 普通字符串
-`In JavaScript '\n' is a line-feed.`
+const name = "Bob", time = "today";
 
-// 多行字符串
-`In JavaScript this is
- not legal.`
+// es5
+'Hello ' + name + ', how are you ' + time + '?' 
 
-console.log(`string text line 1
-string text line 2`);
-
-// 字符串中嵌入变量
-var name = "Bob", time = "today";
+// es6
 `Hello ${name}, how are you ${time}?`
-
-// 大括号内部可以放入任意的JavaScript表达式，可以进行运算，以及引用对象属性。
-var x = 1;
-var y = 2;
-
-`${x} + ${y} = ${x + y}`
-// "1 + 2 = 3"
-
-// 模板字符串之中还能调用函数。
-function fn() {
-  return "Hello World";
-}
-
-`foo ${fn()} bar`
-// foo Hello World bar
 ```
 
 [slide]
-# 正则的扩展
+# 数组的扩展
+------
+- 扩展运算符    
+扩展运算符（spread）是三个点（...）。它好比 rest 参数的逆运算，将一个数组转为用逗号分隔的参数序列。
+
+```js
+console.log(...[1, 2, 3])
+// 1 2 3
+
+console.log(1, ...[2, 3, 4], 5)
+// 1 2 3 4 5
+
+[...document.querySelectorAll('div')]
+// [<div>, <div>, <div>]
+```
 
 [slide]
-# 数值的扩展
-
-[slide]
-# 函数的扩展
+# 数组的扩展
+------
+- Array.from()
+- Array.of()
+- 数组实例的 copyWithin()
+- 数组实例的 find() 和 findIndex()
+- 数组实例的fill()
+- 数组实例的 entries()，keys() 和 values()
+- 数组实例的 includes()
 
 [slide]
 # 对象的扩展
+------
+- 属性的简洁表示法    
+ES6 允许直接写入变量和函数，作为对象的属性和方法。这样的书写更加简洁。
+
+```js
+var foo = 'bar';
+var baz = {foo};
+baz // {foo: "bar"}
+
+// 等同于
+var baz = {foo: foo};
+```
+
+- 属性名表达式     
+下面代码的方法一是直接用标识符作为属性名，方法二是用表达式作为属性名，这时要将表达式放在方括号之内。
+
+```js
+// 方法一
+obj.foo = true;
+
+// 方法二
+obj['a' + 'bc'] = 123;
+```
+
+[slide]
+# 对象的扩展
+------
+- Object.assign    
+Object.assign方法用于对象的合并，将源对象（source）的所有可枚举属性，复制到目标对象（target）。    
+注意，如果目标对象与源对象有同名属性，或多个源对象有同名属性，则后面的属性会覆盖前面的属性。
+
+```js
+var target = { a: 1 };
+
+var source1 = { b: 2 };
+var source2 = { c: 3 };
+
+Object.assign(target, source1, source2);
+target // {a:1, b:2, c:3}
+```
+
+[slide]
+# 对象的扩展
+------
+- 对象的扩展运算符    
+  - 解构赋值: 对象的解构赋值用于从一个对象取值，相当于将所有可遍历的、但尚未被读取的属性，分配到指定的对象上面。所有的键和它们的值，都会拷贝到新对象上面。
+  - 扩展运算符: 扩展运算符（...）用于取出参数对象的所有可遍历属性，拷贝到当前对象之中。
+
+```js
+// 1. 解构赋值
+let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };
+x // 1
+y // 2
+z // { a: 3, b: 4 }
+
+// 2. 扩展运算符
+let z = { a: 3, b: 4 };
+let n = { ...z };
+n // { a: 3, b: 4 }
+```
 
 [slide]
 # Symbol
+------
+- 概述    
+ES6 引入了一种新的原始数据类型Symbol，表示独一无二的值。它是 JavaScript 语言的第七种数据类型，前六种是：undefined、null、布尔值（Boolean）、字符串（String）、数值（Number）、对象（Object）。    
+Symbol 值通过Symbol函数生成。这就是说，对象的属性名现在可以有两种类型，一种是原来就有的字符串，另一种就是新增的 Symbol 类型。凡是属性名属于 Symbol 类型，就都是独一无二的，可以保证不会与其他属性名产生冲突。
+
+```js
+let s = Symbol();
+
+typeof s; // "symbol"
+```
 
 [slide]
-# Set & Map
+# Promise 对象
+------
+- 基本用法    
+Promise构造函数接受一个函数作为参数，该函数的两个参数分别是resolve和reject。它们是两个函数，由 JavaScript 引擎提供，不用自己部署。    
+resolve函数的作用是，将Promise对象的状态从“未完成”变为“成功”（即从 Pending 变为 Resolved），在异步操作成功时调用，并将异步操作的结果，作为参数传递出去；reject函数的作用是，将Promise对象的状态从“未完成”变为“失败”（即从 Pending 变为 Rejected），在异步操作失败时调用，并将异步操作报出的错误，作为参数传递出去。    
+Promise实例生成以后，可以用then方法分别指定Resolved状态和Reject状态的回调函数。
 
 [slide]
-# Proxy
+# Promise 对象
+------   
 
-[slide]
-# Reflect
+```js
+var promise = new Promise(function(resolve, reject) {
+  // ... some code
 
-[slide]
- # Promise 对象
+  if (/* 异步操作成功 */){
+    resolve(value);
+  } else {
+    reject(error);
+  }
+});
 
-[slide]
-# Iterator 和 for ... of 循环
-
-[slide]
-# Generator 函数
-
-[slide]
-# async 函数
+promise.then(function(value) {
+  // success
+}, function(error) {
+  // failure
+});
+```
 
 [slide]
 # Class 的基本语法
+------
+- 简介    
+ES6 提供了更接近传统语言的写法，引入了 Class（类）这个概念，作为对象的模板。通过class关键字，可以定义类。    
+
+基本上，ES6 的class可以看作只是一个语法糖，它的绝大部分功能，ES5 都可以做到，新的class写法只是让对象原型的写法更加清晰、更像面向对象编程的语法而已。上面的代码用 ES6 的class改写，就是下面这样。
 
 [slide]
-# Decorator
+# Class 的基本语法
+------
+- 简介    
+  - constructor: 类的默认方法，通过new命令生成对象实例时，自动调用该方法
+  - 静态方法: 该方法不会被实例继承，而是直接通过类来调用
+  - 私有方法: ES6 不提供, 可以命名上加以区别
+
+```js
+class Point {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  // 公有方法
+  toString() {
+    return '(' + this.x + ', ' + this.y + ')';
+  }
+
+  static sayHello() {
+    return 'hello';
+  }
+
+  _private() {
+    console.log('This is a private method');
+  }
+}
+
+const point = new Point(0, 0);
+point.toString();
+```
 
 [slide]
 # Module 的语法
+------
+模块功能主要由两个命令构成：export和import。export命令用于规定模块的对外接口，import命令用于输入其他模块提供的功能。
+
+```js
+// profile.js
+var firstName = 'Michael';
+var lastName = 'Jackson';
+var year = 1958;
+
+export {firstName, lastName, year};
+
+// main.js
+import {firstName, lastName, year} from './profile';
+function setName(element) {
+  element.textContent = firstName + ' ' + lastName;
+}
+```
 
 [slide]
-# babel
+# 转码器 
+------
+- [Babel](http://babeljs.io/)
+- [Traceur](https://github.com/google/traceur-compiler)
 
 [slide]
 # reference
