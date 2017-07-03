@@ -1,9 +1,14 @@
+# 分享 ppt 地址
+
+- [es6](https://judithhuang.github.io/es6-react-redux-share/es6/es6.html)
+- [react & redux](https://judithhuang.github.io/es6-react-redux-share/react/react.html)
+
 - 重点讲
 
-  - js(es6)
-  - react(生命周期)
-  - redux(action, reducer)
-  - js-sdk(主要是 auth)
+  - js(es6) 20
+  - react(生命周期) 40
+  - redux(action, reducer) 10
+  - js-sdk(主要是 auth) 20
 
 - 省略讲
 
@@ -17,14 +22,3 @@
   - axios
   - webpack
   - react-router
-  - redux-router
-
-TODO:
-
-- es6 基础
-    - es6 是什么?
-    - 有哪些新特性
-    - babel, es6 => es5
-    - reference:
-    - [ECMAScript 6 入门](http://es6.ruanyifeng.com/)
-    - [es6features](https://github.com/lukehoban/es6features)

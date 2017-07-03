@@ -1,7 +1,7 @@
 title: ES6
 speaker: Judith Huang
 url: https://github.com/judithhuang/es6-react-redux-share
-transition: slide3
+transition: slide
 theme: dark
 date: 2017年6月30号
 
@@ -406,7 +406,7 @@ function setName(element) {
 - [Traceur](https://github.com/google/traceur-compiler)
 
 [slide]
-# reference
+# References
 
 - [ECMAScript 6 入门](http://es6.ruanyifeng.com/)
 - [ES6 Features](https://github.com/lukehoban/es6features)
