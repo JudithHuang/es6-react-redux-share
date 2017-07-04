@@ -13,8 +13,6 @@
 - 省略讲
 
   - redux-router
-  - sass scss(angular 已讲)
-  - create-react-app(github)
   - https://github.com/ruanyf/articles/blob/master/2016/2016-11-15-javascript-fullstack-tutorial.md
 
 - 推荐
