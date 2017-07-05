@@ -1,14 +1,4 @@
-# ppt 地址
-
-- [es6](https://judithhuang.github.io/es6-react-redux-share/es6/es6.html)
-- [react & redux](https://judithhuang.github.io/es6-react-redux-share/react/react.html)
-
-- 重点讲
-
-  - js(es6) 20
-  - react(生命周期) 40
-  - redux(action, reducer) 10
-  - js-sdk(主要是 auth) 20
+- [ppt 地址](https://judithhuang.github.io/es6-react-redux-share/docs/index.html)
 
 - 省略讲
 
